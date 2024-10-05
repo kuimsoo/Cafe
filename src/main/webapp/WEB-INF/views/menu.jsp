@@ -41,8 +41,7 @@
                 </table>
             </div>
         </div>
-
-        <div id="mcontainer" style="flex: 2; padding: 10px; display: flex; flex-direction: column;">
+        <div id="coffeecontainer" style="flex: 2; padding: 10px; display: flex; flex-direction: column;">
             <h1>커피 메뉴</h1>  <!-- 모델로 만들어보기 -->
             <div style="flex: 1; max-height: 300px; overflow-y: auto;"> <!-- 스크롤 추가 -->
                 <table border="1" style="width: 100%; border-collapse: collapse;">
@@ -77,17 +76,101 @@
             </div>
         </div>
     </div>
-    
-    
-    <div>
-        <h1>디저트메뉴 목록</h1><!-- 아작스로 만들어보기 -->
-      
-    </div>
-    
-    <div>
-        <h1>스낵 목록</h1>
-       
-    </div>
-</div>
+     <div style="display: flex;">
+	    <div id="dessertmodify" style="flex: 0.5; border: 1px solid #ccc; padding: 10px; display: flex; flex-direction: column;" >
+	    	<h1>상품추가/수정</h1>
+	    	<div style="flex: 1; max-height: 300px; overflow-y: auto;"> <!-- 스크롤 추가 -->
+            	<table>
+                    <tr>
+                        <td>메뉴이름</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>가격</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>디카페인</td>
+                        <td><input type="text"></td>
+                    </tr>	           
+                    <tr>
+                        <td>이미지경로</td>
+                        <td><input type="text"></td>	                  
+                    </tr>
+                    <tr>
+                    	<td>제품설명</td>
+                    	<td><textarea cols="30"></textarea></td>
+                    </tr>                      
+                </table>
+        	</div>
+	    
+	    </div> 
+	    <div id="dessertcontainer" style="flex: 2; padding: 10px; display: flex; flex-direction: column;">
+	            <h1>커피 메뉴</h1>  <!-- 모델로 만들어보기 -->
+            <div style="flex: 1; max-height: 300px; overflow-y: auto;"> <!-- 스크롤 추가 -->
+                <table id="Dessertlist"  border="1" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+        					<td>번호</td><td>이름</td><td>가격</td><td>이미지경로</td><td>제품설명</td><td>삭제</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>	      
+	    </div>
+	</div>
+</div>	
 </body>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(document)
+.ready(function() {
+    selectDessert();
+});
+
+function selectDessert() {
+    $.ajax({
+        url: '/selectDessert',
+        type: 'post',
+        data: {},
+        dataType: 'json',
+        success: function(data) {
+            console.log(data); // 데이터 확인
+            $('#Dessertlist tbody').empty(); // tbody 비우기
+            for (let x of data) {
+                let str = "<tr>" +
+                    "<td>" + x['id'] + "</td>" +
+                    "<td>" + x['name'] + "</td>" +
+                    "<td>" + x['price'] + "</td>" +
+                    "<td>" + x['image_path'] + "</td>" +
+                    "<td><textarea readonly>" + x['info'] + "</textarea></td>" + // info가 없을 경우 대비
+                    "<td><input type='button' class='dessertdel' value='삭제'></td>" +
+                    "</tr>";
+                $('#Dessertlist tbody').append(str); // tbody에 행 추가
+                console.log(str);
+            }
+          
+        }    
+    });
+}
+/* function showinquiry(){
+	$.post('/showinquiry',{},function(data){
+		$('#inquirylist tbody').empty();
+		for( let x of data){
+			let str ='<tr><td style=display:none>'+x['id']+'</td><td style=display:none>'+x['content']+'</td><td style=display:none>'+x['answer']+'</td><td>'+x['nickname']+'</td><td>'+x['title']+'</td><td>'+
+			x['current']+'</td><td>'+x['created']+'</td><td>'+x['ancreated']+'</td><td><input type=button id=inquirydel value=삭제></td></tr>'
+			$('#inquirylist tbody').append(str);
+		}
+		
+	},'json')
+} */
+
+
+
+
+
+
+
+</script>
 </html>

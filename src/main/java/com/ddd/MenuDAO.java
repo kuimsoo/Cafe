@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MenuDAO {
 	
-
-	ArrayList<MenuDTO> selectMenu();
+	ArrayList<MenuDTO> selectCoffee();
+	ArrayList<MenuDTO> selectDessert();
 
 
 }
