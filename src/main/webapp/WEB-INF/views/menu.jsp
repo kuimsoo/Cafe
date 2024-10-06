@@ -27,7 +27,8 @@
                         <td>디카페인</td>
                         <td><input type="text"></td>
                     </tr>	
-                    <tr>
+                    <tr> 
+                    
                         <td>사이즈</td>
                         <td><input type="text"></td>
                     </tr>	
