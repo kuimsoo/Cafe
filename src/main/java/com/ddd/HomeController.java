@@ -1,5 +1,8 @@
 package com.ddd;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -10,7 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -55,7 +59,26 @@ public class HomeController {
 		}
 		return Ar.toString();
 	}
-	
+	@PostMapping("/coffeeimage")
+	@ResponseBody
+	public String itemimage(HttpServletRequest req,Model model) {
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+		
+		 MultipartFile file = multipartRequest.getFile("coffeefile");
+         
+         String uploadDir = "src/main/resources/static/coffee";
+         File uploadDirectory = new File(Paths.get(uploadDir).toAbsolutePath().normalize().toString());
+         File destinationFile = new File(uploadDirectory, file.getOriginalFilename());
+         try {
+			file.transferTo(destinationFile);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "menu";
+	}
 	
 	
 	

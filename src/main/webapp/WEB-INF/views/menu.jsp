@@ -12,6 +12,7 @@
     <div style="display: flex;">
         <div id="coffeemodify" style="flex: 0.5; border: 1px solid #ccc; padding: 10px; display: flex; flex-direction: column;">
             <h1>상품추가/수정</h1>
+            <div><input type="hidden" id="coffeeid"></div>
             <div style="flex: 1; max-height: 300px; overflow-y: auto;"> <!-- 스크롤 추가 -->
                 <table>
                     <tr>
@@ -32,12 +33,16 @@
                     </tr>	
                     <tr>
                         <td>이미지경로</td>
-                        <td><input type="text"></td>	                  
+                        <td><input type="text" value="/coffee/.jpg"></td>	                  
                     </tr>
                     <tr>
                     	<td>제품설명</td>
                     	<td><textarea cols="30"></textarea></td>
-                    </tr>                      
+                    </tr>
+                    <tr>
+                    	<td>이미지첨부</td><td><input type="file" id="coffeefile" style="width:200px"></td>                  
+                    </tr>
+                     <tr><td colspan="2"><input type="button" id="coffeeimage" value="이미지추가"></td></tr>                      
                 </table>
             </div>
         </div>
@@ -124,11 +129,29 @@
 </body>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
-$(document)
-.ready(function() {
+$(document).ready(function() {
     selectDessert();
+    
+    $(document).on('click', '#coffeeimage', function() {
+        if ($('#coffeefile').val() == '') {
+            alert('이미지파일을 선택해주세요.');
+        } else {
+            let formData = new FormData();
+            formData.append('coffeefile', $('#coffeefile')[0].files[0]);
+            
+            $.ajax({
+                url: '/coffeeimage',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    alert('이미지가 업로드가 완료되었습니다.');
+                }
+            });
+        }
+    });
 });
-
 function selectDessert() {
     $.ajax({
         url: '/selectDessert',
@@ -154,6 +177,7 @@ function selectDessert() {
         }    
     });
 }
+
 /* function showinquiry(){
 	$.post('/showinquiry',{},function(data){
 		$('#inquirylist tbody').empty();
@@ -165,7 +189,6 @@ function selectDessert() {
 		
 	},'json')
 } */
-
 
 
 
