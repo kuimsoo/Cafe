@@ -8,7 +8,6 @@ public class MenuDTO {
 	String name;
 	int price;
 	String decaf;
-	String size;
 	String image_path;
 	String info;
 }

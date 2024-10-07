@@ -5,12 +5,30 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ddd.MenuDAO">
+
 <select id="selectCoffee" resultType="com.ddd.MenuDTO"> 
-select id,name,price,decaf,size,image_path,info from menu_coffee 
+select id,name,price,decaf,image_path,info from menu_coffee 
 </select>
 
 <select id="selectDessert" resultType="com.ddd.MenuDTO"> 
 select id,name,price,image_path,info from menu_dessert 
+</select>
+
+<insert id="insertCoffee">
+insert into menu_coffee set name=#{param1}, price=#{param2}, decaf=#{param3}, image_path=#{param4}, info=#{param5}
+</insert>
+
+<update id="updateCoffee">
+update menu_coffee set name=#{param1}, price=#{param2}, decaf=#{param3}, image_path=#{param4}, info=#{param5} where id=#{param6}
+
+</update>
+
+<delete id="deleteCoffee">
+delete from menu_coffee where id=#{param1}
+
+</delete>
+<select id="selectMenu" resultType="com.ddd.MenuDTO"> 
+select id,name,price from menu 
 </select>
 
 </mapper>
